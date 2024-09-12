@@ -1,0 +1,52 @@
+{% extends 'index.html'%}
+{% load static%}
+{% block content %}
+<!-- templates/movie_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/movies.css' %}">
+    <style>
+        .card {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h5 id="h5movie">RECOMMENDED MOVIES</h5>
+    <div class="container" >
+        <div class="row">
+            {% for movie in movies %}
+                <div class="col-md-3">
+                    <div class="card" style="box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);">
+                        <a href="{% url 'movies/detail' movie.id %}"><img style=" height: 350px;" src="{{ movie.image.url }}" class="card-img-top" alt="{{ movie.moviename }}"></a>
+                        <div class="card-body">
+                            <h5 style="text-align: center;" class="card-title">{{ movie.moviename }}</h5>
+                            
+                           
+                            <p style="text-align: center;" class="card-text"> {{ movie.genre }}</p>
+                            
+                           
+                        </div>
+                    </div>
+                </div>
+
+            
+                
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{% endblock %}
+
+
+
+
+

@@ -1,0 +1,167 @@
+{% extends 'index.html'%}
+{% load static%}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/movie_detail.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <style>
+        #totalprice{
+            width: 100%;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            border: 1px solid black;
+            
+        }
+        #total-price {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: #ec0a0a;
+            color: white;
+            font-weight: lighter;
+            padding: 10px;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #pricediv{
+            height: 30px;
+            width: 500px;
+            position: absolute;
+            right: 50px;
+            border: 1px solid black;
+            display: flex;
+            flex-direction: row;
+            
+        }
+        #price{
+            width: 50%;
+            height: 30px;
+            border: 1px solid black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #price h6{
+            text-align: center;
+            
+        }
+        #bookticket{
+            width: 50%;
+            height: 30px;
+
+        }
+        #bookticket .btn{
+            width: 100%;
+            height: 30px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0px;
+        }
+        .seat {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .available { background-color: #90ee90; }  /* Green */
+        .booked { background-color: #ff6347; }    /* Red */
+        .selected { background-color: #add8e6; }  /* Blue */
+        .bestseller { background-color: #ffd700; } /* Yellow */
+        .seat-container { display: flex; flex-wrap: wrap; max-width: 400px; margin-left: 40px;margin-top: 50px;}
+        .seat-row { margin-bottom: 10px; display: flex; flex-direction: row;}
+    </style>
+</head>
+<body>
+    <!-- <div id="totalprice">
+   <div id="pricediv">
+    <div id="price">
+      <h6 >200</h6>
+    </div>
+    <div id="bookticket">
+<a href=""><button class="btn btn-success">Book Ticket</button></a>
+    </div>
+
+
+   </div>
+    </div> -->
+    <div id="total-price">Total Price: Rs0.00</div>
+    
+    <div style="display: flex; flex-direction: row;">
+        <div style="width: 55%; " >
+        <form method="POST">
+        {% csrf_token %}
+        <div class="seat-container " >
+            {% for row, seats in seat_layout.items %}
+                <div class="seat-row">
+                    <div>{{row}}</div>  
+                    {% for seat in seats %}
+                        <div class="seat {{ seat.status }}" data-seat-id="{{ seat.id }}"  data-seat-price="{{ seat.price }}">
+                            {{ seat.number }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        <input type="hidden" name="selected_seats" id="selected_seats" value="1,2,3">
+        <button style="position: absolute; right: 0px; margin-right: 7.3%; margin-top: 6.5%; width: 500px; height: 40px; border-radius: 4px; border-color: transparent;color: white; background-color: black; font-weight: 600;" type="submit">Book Selected Seats</button>
+    </form>
+</div>
+    <div style="width: 40%;box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); height: 60vh; margin-top: 50px; border-radius: 10px; " >
+        <div style="display: flex; flex-direction: row;  width: 95%;height: 60%; margin-left: 2.5%; margin-right: 2.5%;margin-top: 5px;">
+       <div style="width: 35%; height: 70%; border-radius: 5px; "><img width="100%" height="100%" src="{{movie.image.url}}" alt=""></div>
+       <div style="width: 65%; height: 70%;">
+        <div style="width: 90%; border-radius: 5px; background: url({{movie.coverimage.url}}); margin-left: 5%; margin-right: 5%; height: 100%; background-color: #add8e6;">
+            <h2 style="font-style: italic; color: white;">{{show_timing.theater}}</h2>
+            <h2 style="color: white;">{{movie.moviename}}</h2>
+            <h4 style="color: white;">{{movie.genre}}</h4>
+
+        </div>
+       </div>
+    </div>
+       <div></div>
+    </div>
+    </div>
+    
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedSeatsInput = document.getElementById('selected_seats');
+            const totalPriceDisplay = document.getElementById('total-price');
+            let totalPrice = 0;
+
+            document.querySelectorAll('.seat.available').forEach(seat => {
+                seat.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                    if (this.classList.contains('selected')) {
+                        this.classList.remove('available');
+                        totalPrice += parseFloat(this.getAttribute('data-seat-price'));
+                    } else {
+                        this.classList.add('available');
+                        totalPrice -= parseFloat(this.getAttribute('data-seat-price'));
+                    }
+                    // Update the total price display
+                    totalPriceDisplay.textContent = `Total Price: Rs${totalPrice.toFixed(2)}`;
+                });
+            });
+
+            document.querySelector('form').addEventListener('submit', function() {
+                // const selectedSeatIds = Array.from(document.querySelectorAll('.seat.selected'))
+                //     .map(seat => seat.getAttribute('data-seat-id')).filter(id=>id);
+                // selectedSeatsInput.value = selectedSeatIds.join(',');
+                // console.log('selected seat ids:',selectedSeatIds)
+                const selectedSeatIds=document.querySelectorAll('.seat.available')
+                console.log(selectedSeatIds)
+            });
+        });
+    </script>
+</body>
+
+{% endblock %}

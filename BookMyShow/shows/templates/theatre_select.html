@@ -1,0 +1,49 @@
+{% extends 'index.html'%}
+
+
+{% load static%}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/theatre_list.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/theatre_list.css' %}">
+    
+</head>
+<body>
+    <div id="moviename" style="background-image: url('{{ movie.coverimage.url }}')">
+        
+        <div style="margin-left: 30px;" id="moviedetail">
+        <div style="margin-left: 10px;"><h3>{{movie.moviename}}</h3></div>
+        <div style="  font-size: smaller;"><h3 style="font-weight: 100; ">-{{movie.language}}</h3></div>
+        <div> <h3 style="font-weight: 100;">-{{movie.genre}}</h3> </div>
+    </div>
+    
+    </div>
+    <div id="datediv">
+
+    </div> 
+    {% for theater,time in theaters.items %}
+    <div id="theatre-list-div" style="box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3)">
+<div id="insidetheatrelist">
+<div id="theatres" style="display: flex; align-items: center; justify-content: center; font-size: large; font-weight: bold; ;"><div>{{theater}}-{{ time.0.theater.location }}</div></div>
+
+<div id="time" style="width: 75%; display: flex; flex-direction: row; align-items: center;" >
+    {% for showtime in time %}
+    <div id="insidetime" style="width:100px ;  height: 50px; border: 2px solid rgb(130, 216, 49); text-align: center; display: flex; align-items: center; margin-left: 10px; ">
+        <a href="{% url 'seat/selection' showtime.id %}"><button style="border-color: transparent;"   class="btn">{{showtime.time|date:"H:i A" }}</button></a>
+    </div>
+    {% endfor %}
+
+</div>
+</div>
+
+ </div>
+ {% endfor %}
+ 
+
+
+    
+</body>
+
+{% endblock %}

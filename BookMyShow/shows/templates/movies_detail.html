@@ -1,0 +1,54 @@
+{% extends 'index.html'%}
+{% load static%}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/movie_detail.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+</head>
+<body>
+   
+</body>
+
+ <div id="movie_detail">
+<img style="filter: brightness(50%);" id="coverimage" src="https://wallpapers.com/images/hd/titanic-ship-at-night-yidsy0uusbjv6lem.jpg" alt="">
+
+    </div>
+    <div id="moviecard">
+        <div  class="card" style="width: 18rem; background-color: rgb(56, 49, 49);">
+            <img  style=" height: 320px; border-radius: 20px; " src="{{movie.image.url}}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 style="text-align: center; color: white;" class="card-title">{{movie.moviename}}</h5>
+              <p style="text-align: center; color: white;" class="card-text">{{movie.genre}}</p>
+              
+            </div>
+          </div>
+          <div id="inlinemovie">
+          <div style="margin-top: 45px; margin-left: 45px;" id="moviename"><h5 style="color: white; font-weight: bolder; font-size: xx-large;">{{movie.moviename}}</h5></div>
+          <div style="margin-top: 45px; margin-left: 45px;" id="movietype"><h5 style="color: white;">{{movie.movie_format}},{{movie.language}}</h5></div>
+          <div style="margin-top: 45px; margin-left: 45px;" id="moviegenre"> <h5 style="color: white;">{{movie.duration}} . {{movie.genre}} . {{movie.certificate}} . {{movie.release_date}}</h5></div>
+          <div style="margin-top: 45px; margin-left: 45px;" id="button"><a href="{% url 'theatre/list' movie.id %}"><button style="padding: 10px; width: 200px; font-weight: bold;" class="btn btn-success">Book Tickets</button></a></div>
+          </div>
+
+          
+    </div>
+    <div id="moviedescription">
+<h4 style="margin-left: 132px; margin-top: 50px;">About The Movie</h4>
+<p style="margin-left: 132px;">{{movie.description}}</p>
+<h4 style="text-align: center; margin-top: 30px;">Cast</h4>
+  <div id="castdiv">
+  {% for cast in casts %}
+  <div id="castimg"><img src="{{cast.image.url}}" alt=""><div id="castname" ><h6 style="text-align: center;">{{cast.name}}</h6></div><div id="castrole"><p style="text-align: center;">{{cast.role}}</p></div></div>
+  {% endfor %}
+  </div>
+  <h4 style="text-align: center; margin-top: 30px;">Crew</h4>
+  <div id="castdiv">
+    {% for crew in crews %}
+    <div id="castimg"><img src="{{crew.image.url}}" alt=""><div id="castname" ><h6 style="text-align: center;">{{crew.name}}</h6></div><div id="castrole"><p style="text-align: center;">{{crew.role}}</p></div></div>
+    {% endfor %}
+    </div>
+    </div>
+    
+
+{% endblock %}

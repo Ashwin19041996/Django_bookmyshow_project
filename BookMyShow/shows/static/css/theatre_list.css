@@ -1,0 +1,91 @@
+/* *{
+    margin: 0px;
+ } */
+body{
+    background-color: rgb(238, 243, 243);
+} 
+
+#moviename{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+    margin-top: 40px;
+    background-color: white;
+}
+
+
+
+#moviedetail{
+    height: 45%;
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    border-radius: 5px;
+    background-color: white;
+    
+    align-items: center;
+}
+#datediv{
+    margin-top: 0px;
+    width: 100%;
+    height: 60px;
+    border-top: 1px solid rgb(238, 243, 243);
+    background-color: white;
+}
+#theatre-list-div{
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    background-color: white;
+    margin-top: 5px;
+    border-radius: 5px;
+    
+    
+}
+#insidetheatrelist{
+    height: 100px;
+    width: 95%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    display: flex;
+    flex-direction: row;
+    
+    
+    
+
+}
+#theatres{
+    height: 100px;
+    width: 25%;
+   
+   
+}
+
+#time{
+width: 75%;
+height: 100px;
+display: flex;
+flex-direction: row;
+}
+#insidetime{
+    height: 50px;
+    width: 80px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+#insidetime:hover{
+    background-color:rgb(130, 216, 49) ;
+    
+    font-weight: 600;
+    
+}
+#insidetime button:hover{
+    font-weight: 600;
+    color: black;
+}

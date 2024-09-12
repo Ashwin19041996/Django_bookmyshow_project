@@ -1,0 +1,22 @@
+h1{
+    color: red;
+}
+
+#btt{
+    position: absolute;
+    left: 440px;
+    bottom: 10px;
+    width: 200px;
+    
+}
+.custon-navbar{
+    background-color: black;
+}
+.login{
+    position: absolute;
+    right: 150px;
+}
+.logout{
+    position: absolute;
+    right: 50px;
+}
